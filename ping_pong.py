@@ -35,7 +35,8 @@ player1 = Player('racket.png', 5, 250, 4, 20, 110)
 player2 = Player('racket.png', 675, 250, 4, 20, 110)
 ball = GameSprite('tenis_ball.png', 350, 250, 3, 30, 30)
 
-
+speed_x = 3
+speed_y = 3
 
 while game:
     for i in event.get():
@@ -45,10 +46,18 @@ while game:
         
     if not finish:
         window.fill((107, 142, 35))
+        ball.rect.x += speed_x
+        ball.rect.y+= speed_y
+        if ball.rect.y > 470 or ball.rect.y < 0:
+            speed_y *= -1
+        if sprite.collide_rect(ball, player1) or sprite.collide_rect(ball, player2):
+            speed_x *= -1
         player1.reset()
         player1.update()
         player2.reset()
+        player2.updates()
         ball.reset()
     display.update()
     clock.tick(60)
+
 
